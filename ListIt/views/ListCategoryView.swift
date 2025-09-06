@@ -13,18 +13,24 @@ struct ListCategoryView: View {
     @Environment(MyDataStore.self) var dataStore
     @Query(filter: nil, sort: [SortDescriptor(\ListCategory.createdAt)]) var categories: [ListCategory]
     @State private var currentCategory: ListCategory?
+    @State private var showingAddDialog = false
+    @State private var newCategoryName = ""
 
     var body: some View {
         NavigationSplitView {
-            if categories.isEmpty {
-                Text("Please add a category")
-            } else {
-                List(categories, selection: $currentCategory) { category in
-                    NavigationLink(category.name, value: category)
-                }
-                .navigationBarTitle("Categories")
+            List(categories, selection: $currentCategory) { category in
+                NavigationLink(category.name, value: category)
             }
-
+            .navigationBarTitle("Categories")
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {
+                        showingAddDialog = true
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
         } detail: {
             if let currentCategory {
                 ListItemView(currentCategory)
@@ -32,9 +38,16 @@ struct ListCategoryView: View {
                 Text("No category selected")
             }
         }
-    }
-}
 
-#Preview {
-    ListCategoryView()
+        .alert("Add Category", isPresented: $showingAddDialog) {
+            TextField("Category Name", text: $newCategoryName)
+            Button("Cancel", role: .cancel) {
+                newCategoryName = ""
+            }
+            Button("Add") {
+                dataStore.addCategory(name: newCategoryName)
+                newCategoryName = ""
+            }.disabled(newCategoryName == "")
+        }
+    }
 }

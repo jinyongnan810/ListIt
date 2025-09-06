@@ -28,7 +28,7 @@ struct ListItemView: View {
     var body: some View {
         List(items) { item in
             Text(item.name)
-        }
+        }.navigationTitle(category.name)
     }
 }
 

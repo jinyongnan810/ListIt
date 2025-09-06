@@ -56,51 +56,35 @@ public class MyDataStore {
 
     // MARK: - Category Operations
 
-    func addCategory(name: String) -> ListCategory {
+    public func addCategory(name: String) {
         let category = ListCategory(name: name)
         modelContext.insert(category)
         save()
-        return category
     }
 
-    func deleteCategory(_ category: ListCategory) {
+    public func deleteCategory(_ category: ListCategory) {
         modelContext.delete(category)
         save()
     }
 
     // MARK: - Item Operations
 
-    func addItem(name: String, to category: ListCategory) -> ListItem {
+    public func addItem(name: String, to category: ListCategory) -> ListItem {
         let item = ListItem(name: name, category: category)
         modelContext.insert(item)
         save()
         return item
     }
 
-    func toggleItem(_ item: ListItem) {
+    public func toggleItem(_ item: ListItem) {
         item.isChecked.toggle()
         item.updatedAt = Date()
         save()
     }
 
-    func deleteItem(_ item: ListItem) {
+    public func deleteItem(_ item: ListItem) {
         modelContext.delete(item)
         save()
-    }
-
-    // MARK: - Fetch Operations
-
-    func fetchCategories() -> [ListCategory] {
-        let descriptor = FetchDescriptor<ListCategory>(
-            sortBy: [SortDescriptor(\.createdAt)]
-        )
-
-        do {
-            return try modelContext.fetch(descriptor)
-        } catch {
-            print("Failed to fetch categories: \(error)")
-            return []
-        }
     }
 
     // MARK: - Save
