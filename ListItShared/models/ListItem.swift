@@ -10,13 +10,12 @@ import SwiftData
 
 @Model
 public final class ListItem {
-    @Attribute(.unique)
-    public var id: UUID
+    public var id: UUID = UUID()
 
-    public var name: String
-    public var isChecked: Bool
-    public var createdAt: Date
-    public var updatedAt: Date
+    public var name: String = ""
+    public var isChecked: Bool = false
+    public var createdAt: Date = Date()
+    public var updatedAt: Date = Date()
 
     // Relationship to category
     public var category: ListCategory?

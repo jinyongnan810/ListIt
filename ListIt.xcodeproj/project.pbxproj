@@ -102,16 +102,36 @@
 			);
 			target = 3F53A8232E6AC8DD00F249B3 /* ListItShared */;
 		};
+		3F615B482E6CFD0D0007712E /* Exceptions for "ListIt" folder in "ListIt" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 3F0F69382E6A6FBD00ECBBD9 /* ListIt */;
+		};
+		3F615B4A2E6CFD1F0007712E /* Exceptions for "ListIt Watch App" folder in "ListIt Watch App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"ListIt-Watch-App-Info.plist",
+			);
+			target = 3F0F69452E6A6FBE00ECBBD9 /* ListIt Watch App */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3F0F693B2E6A6FBD00ECBBD9 /* ListIt */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3F615B482E6CFD0D0007712E /* Exceptions for "ListIt" folder in "ListIt" target */,
+			);
 			path = ListIt;
 			sourceTree = "<group>";
 		};
 		3F0F694A2E6A6FBE00ECBBD9 /* ListIt Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3F615B4A2E6CFD1F0007712E /* Exceptions for "ListIt Watch App" folder in "ListIt Watch App" target */,
+			);
 			path = "ListIt Watch App";
 			sourceTree = "<group>";
 		};
@@ -504,6 +524,7 @@
 				DEVELOPMENT_TEAM = 6W8B6G9KYD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ListIt-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ListIt;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.kinn.ListIt;
@@ -539,6 +560,7 @@
 				DEVELOPMENT_TEAM = 6W8B6G9KYD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ListIt-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = ListIt;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.kinn.ListIt;
@@ -576,6 +598,7 @@
 				DEVELOPMENT_TEAM = 6W8B6G9KYD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ListIt/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ListIt;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -617,6 +640,7 @@
 				DEVELOPMENT_TEAM = 6W8B6G9KYD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ListIt/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = ListIt;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

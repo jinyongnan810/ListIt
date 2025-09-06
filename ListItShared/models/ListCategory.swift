@@ -10,12 +10,11 @@ import SwiftData
 
 @Model
 public final class ListCategory {
-    @Attribute(.unique)
-    public var id: UUID
+    public var id: UUID = UUID()
 
-    public var name: String
-    public var createdAt: Date
-    public var updatedAt: Date
+    public var name: String = ""
+    public var createdAt: Date = Date()
+    public var updatedAt: Date = Date()
 
     // Cascade delete relationship
     @Relationship(deleteRule: .cascade, inverse: \ListItem.category)
