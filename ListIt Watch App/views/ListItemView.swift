@@ -25,9 +25,14 @@ struct ListItemView: View {
         _items = Query(filter: filter, sort: sort)
     }
 
+    @State private var reversed: Bool = false
+    private var sortedItems: [ListItem] {
+        reversed ? items.reversed() : items
+    }
+
     var body: some View {
         List {
-            ForEach(items) { item in
+            ForEach(sortedItems) { item in
                 HStack {
                     Text(item.name)
                     Spacer()
@@ -37,15 +42,24 @@ struct ListItemView: View {
                     dataStore.toggleItem(item)
                 }
             }.onDelete { indexSet in
-                let item = items[indexSet.first!]
+                let item = sortedItems[indexSet.first!]
                 dataStore.deleteItem(item)
             }
         }.navigationTitle(category.name)
             .toolbar {
-                TextFieldLink(prompt: Text("New Item")) {
-                    Label("Add", systemImage: "plus")
-                } onSubmit: { text in
-                    dataStore.addItem(name: text, to: category)
+                ToolbarItem(placement: .primaryAction) {
+                    TextFieldLink(prompt: Text("New Item")) {
+                        Label("Add", systemImage: "plus")
+                    } onSubmit: { text in
+                        dataStore.addItem(name: text, to: category)
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        reversed.toggle()
+                    }) {
+                        Image(systemName: "arrow.up.arrow.down")
+                    }
                 }
             }
     }

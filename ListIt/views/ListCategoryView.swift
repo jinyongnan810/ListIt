@@ -17,7 +17,7 @@ struct ListCategoryView: View {
     @State private var newCategoryName = ""
     @State private var reversed: Bool = false
     private var sortedCategories: [ListCategory] {
-        reversed ? categories : categories.reversed()
+        reversed ? categories.reversed() : categories
     }
 
     @State private var pendingDelete: ListCategory?
@@ -43,7 +43,7 @@ struct ListCategoryView: View {
                         Image(systemName: "plus")
                     }
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button(action: {
                         reversed.toggle()
                     }) {

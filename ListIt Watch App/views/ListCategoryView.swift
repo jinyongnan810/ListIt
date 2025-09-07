@@ -17,23 +17,37 @@ struct ListCategoryView: View {
     @State private var pendingDelete: ListCategory?
     @State private var showDeleteAlert = false
 
+    @State private var reversed: Bool = false
+    private var sortedCategories: [ListCategory] {
+        reversed ? categories.reversed() : categories
+    }
+
     var body: some View {
         NavigationSplitView {
             List(selection: $currentCategory) {
-                ForEach(categories) { category in
+                ForEach(sortedCategories) { category in
                     NavigationLink(category.name, value: category)
                 }.onDelete { indexSet in
-                    let category = categories[indexSet.first!]
+                    let category = sortedCategories[indexSet.first!]
                     pendingDelete = category
                     showDeleteAlert = true
                 }
             }
             .navigationBarTitle("Categories")
             .toolbar {
-                TextFieldLink(prompt: Text("New Category")) {
-                    Label("Add", systemImage: "plus")
-                } onSubmit: { text in
-                    dataStore.addCategory(name: text)
+                ToolbarItem(placement: .primaryAction) {
+                    TextFieldLink(prompt: Text("New Category")) {
+                        Label("Add", systemImage: "plus")
+                    } onSubmit: { text in
+                        dataStore.addCategory(name: text)
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        reversed.toggle()
+                    }) {
+                        Image(systemName: "arrow.up.arrow.down")
+                    }
                 }
             }
         } detail: {
