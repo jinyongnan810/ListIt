@@ -31,7 +31,14 @@ struct ListItemView: View {
     var body: some View {
         List {
             ForEach(items) { item in
-                Text(item.name)
+                HStack {
+                    Text(item.name)
+                    Spacer()
+                    Image(systemName: item.isChecked ? "checkmark.circle" : "circle")
+                        .contentTransition(.symbolEffect(.replace.byLayer.downUp))
+                }.contentShape(Rectangle()).onTapGesture {
+                    dataStore.toggleItem(item)
+                }
             }.onDelete { indexSet in
                 let item = items[indexSet.first!]
                 dataStore.deleteItem(item)
