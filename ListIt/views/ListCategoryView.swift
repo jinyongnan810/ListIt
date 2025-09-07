@@ -15,15 +15,23 @@ struct ListCategoryView: View {
     @State private var currentCategory: ListCategory?
     @State private var showingAddDialog = false
     @State private var newCategoryName = ""
+    @State private var reversed: Bool = false
+    private var sortedCategories: [ListCategory] {
+        reversed ? categories : categories.reversed()
+    }
+
+    @State private var pendingDelete: ListCategory?
+    @State private var showDeleteAlert = false
 
     var body: some View {
         NavigationSplitView {
             List(selection: $currentCategory) {
-                ForEach(categories) { category in
+                ForEach(sortedCategories) { category in
                     NavigationLink(category.name, value: category)
                 }.onDelete { indexSet in
-                    let category = categories[indexSet.first!]
-                    dataStore.deleteCategory(category)
+                    let category = sortedCategories[indexSet.first!]
+                    pendingDelete = category
+                    showDeleteAlert = true
                 }
             }
             .navigationBarTitle("Categories")
@@ -33,6 +41,13 @@ struct ListCategoryView: View {
                         showingAddDialog = true
                     }) {
                         Image(systemName: "plus")
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        reversed.toggle()
+                    }) {
+                        Image(systemName: "arrow.up.arrow.down")
                     }
                 }
             }
@@ -53,6 +68,14 @@ struct ListCategoryView: View {
                 dataStore.addCategory(name: newCategoryName)
                 newCategoryName = ""
             }.disabled(newCategoryName == "")
+        }
+        .alert("Delete Category?", isPresented: $showDeleteAlert, presenting: pendingDelete) { category in
+            Button("Delete", role: .destructive) {
+                dataStore.deleteCategory(category)
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: { category in
+            Text("Are you sure you want to delete \"\(category.name)\"?")
         }
     }
 }

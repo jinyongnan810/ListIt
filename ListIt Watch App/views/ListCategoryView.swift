@@ -14,6 +14,9 @@ struct ListCategoryView: View {
     @Query(filter: nil, sort: [SortDescriptor(\ListCategory.createdAt)]) var categories: [ListCategory]
     @State private var currentCategory: ListCategory?
 
+    @State private var pendingDelete: ListCategory?
+    @State private var showDeleteAlert = false
+
     var body: some View {
         NavigationSplitView {
             List(selection: $currentCategory) {
@@ -21,7 +24,8 @@ struct ListCategoryView: View {
                     NavigationLink(category.name, value: category)
                 }.onDelete { indexSet in
                     let category = categories[indexSet.first!]
-                    dataStore.deleteCategory(category)
+                    pendingDelete = category
+                    showDeleteAlert = true
                 }
             }
             .navigationBarTitle("Categories")
@@ -38,6 +42,13 @@ struct ListCategoryView: View {
             } else {
                 Text("No category selected")
             }
+        }.alert("Delete Category?", isPresented: $showDeleteAlert, presenting: pendingDelete) { category in
+            Button("Delete", role: .destructive) {
+                dataStore.deleteCategory(category)
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: { category in
+            Text("Are you sure you want to delete \"\(category.name)\"?")
         }
     }
 }
