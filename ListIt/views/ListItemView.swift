@@ -29,8 +29,13 @@ struct ListItemView: View {
     }
 
     var body: some View {
-        List(items) { item in
-            Text(item.name)
+        List {
+            ForEach(items) { item in
+                Text(item.name)
+            }.onDelete { indexSet in
+                let item = items[indexSet.first!]
+                dataStore.deleteItem(item)
+            }
         }.navigationTitle(category.name)
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {

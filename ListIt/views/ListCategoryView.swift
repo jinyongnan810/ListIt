@@ -18,8 +18,13 @@ struct ListCategoryView: View {
 
     var body: some View {
         NavigationSplitView {
-            List(categories, selection: $currentCategory) { category in
-                NavigationLink(category.name, value: category)
+            List(selection: $currentCategory) {
+                ForEach(categories) { category in
+                    NavigationLink(category.name, value: category)
+                }.onDelete { indexSet in
+                    let category = categories[indexSet.first!]
+                    dataStore.deleteCategory(category)
+                }
             }
             .navigationBarTitle("Categories")
             .toolbar {
