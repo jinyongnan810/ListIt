@@ -15,6 +15,9 @@ struct ListItemView: View {
 
     @Query var items: [ListItem]
 
+    @State private var showingAddDialog = false
+    @State private var newItemName = ""
+
     init(_ category: ListCategory) {
         self.category = category
         let categoryId = category.id
@@ -29,11 +32,24 @@ struct ListItemView: View {
         List(items) { item in
             Text(item.name)
         }.navigationTitle(category.name)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {
+                        showingAddDialog = true
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
+            .alert("Add Item", isPresented: $showingAddDialog) {
+                TextField("Item Name", text: $newItemName)
+                Button("Cancel", role: .cancel) {
+                    newItemName = ""
+                }
+                Button("Add") {
+                    dataStore.addItem(name: newItemName, to: category)
+                    newItemName = ""
+                }.disabled(newItemName == "")
+            }
     }
-}
-
-#Preview {
-    // Dummy category for preview
-    let previewCategory = ListCategory(name: "Preview Category")
-    ListItemView(previewCategory)
 }

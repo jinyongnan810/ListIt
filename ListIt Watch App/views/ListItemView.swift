@@ -29,11 +29,12 @@ struct ListItemView: View {
         List(items) { item in
             Text(item.name)
         }.navigationTitle(category.name)
+            .toolbar {
+                TextFieldLink(prompt: Text("New Item")) {
+                    Label("Add", systemImage: "plus")
+                } onSubmit: { text in
+                    dataStore.addItem(name: text, to: category)
+                }
+            }
     }
-}
-
-#Preview {
-    // Dummy category for preview
-    let previewCategory = ListCategory(name: "Preview Category")
-    ListItemView(previewCategory)
 }

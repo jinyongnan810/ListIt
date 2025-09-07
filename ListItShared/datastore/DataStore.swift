@@ -59,32 +59,31 @@ public class MyDataStore {
     public func addCategory(name: String) {
         let category = ListCategory(name: name)
         modelContext.insert(category)
-        save()
+//        save()
     }
 
     public func deleteCategory(_ category: ListCategory) {
         modelContext.delete(category)
-        save()
+//        save()
     }
 
     // MARK: - Item Operations
 
-    public func addItem(name: String, to category: ListCategory) -> ListItem {
+    public func addItem(name: String, to category: ListCategory) {
         let item = ListItem(name: name, category: category)
         modelContext.insert(item)
-        save()
-        return item
+//        save()
     }
 
     public func toggleItem(_ item: ListItem) {
         item.isChecked.toggle()
         item.updatedAt = Date()
-        save()
+//        save()
     }
 
     public func deleteItem(_ item: ListItem) {
         modelContext.delete(item)
-        save()
+//        save()
     }
 
     // MARK: - Save
